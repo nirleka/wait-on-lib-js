@@ -3,7 +3,7 @@
   "description": "Load an external javascript library in an Iron-Router waitOn or onBeforeAction hooks. No coffeescript dependency.",
   "homepage": "https://github.com/DerMambo/wait-on-lib-js.git",
   "author": "Maxim Dubrovin, Manuel Schoebel (http://manuel-schoebel.com)",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "git": "https://github.com/MaximDubrovin/wait-on-lib-js.git",
   "packages": {}
 }
