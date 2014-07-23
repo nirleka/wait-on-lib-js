@@ -3,13 +3,13 @@ Package.describe({
 });
 
 Package.on_use(function (api) {
-  api.use(['coffeescript'], 'client');
+  api.use(['jquery'], 'client');
 
-  api.export && api.export('IRLibLoader'); 
+  api.export && api.export('IRLibLoader');
 
-  api.add_files('ir_lib_loader.coffee', 'client');
+  api.add_files('ir_lib_loader.js', 'client');
 });
 
 Package.on_test(function (api) {
-  // no tests yet
+  //no tests yet
 });
