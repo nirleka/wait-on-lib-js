@@ -1,1 +1,9 @@
+# osx noise
+.DS_Store
+profile
+
+# webstorm noise
+.idea
+
+# mrt noise
 .build*
