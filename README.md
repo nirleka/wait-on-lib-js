@@ -63,6 +63,7 @@ var DashboardController = RouteController.extend({
     beforeAction: function() {
 		//remove all preload css if exist
 		$("link[rel^='preload stylesheet']").remove();
+		this.next();
     }
 });
 ```
