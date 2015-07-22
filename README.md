@@ -60,7 +60,7 @@ Here we have one.js and two.js. two.js has to be loaded secondly because it depe
 Don't forget to remove the preload css when load route by adding action below in default controller.
 ```javascript
 var DashboardController = RouteController.extend({
-    action: function() {
+    beforeAction: function() {
 		//remove all preload css if exist
 		$("link[rel^='preload stylesheet']").remove();
     }
