@@ -2,8 +2,8 @@ wait-on-lib-js-css
 ==================
 Fork from [MaximDubrovin](https://github.com/MaximDubrovin/wait-on-lib-js)
 
-Package purpose: Use Iron-Router waitOn or onBeforeAction hooks to load external javascript libraries / css file. 
-The css will be added in head in link tag with rel="preload stylesheet" so that it can be remove later (see example below).
+Use Iron-Router waitOn or onBeforeAction hooks to load external javascript libraries / css file. 
+The css will be added in head in link tag with `rel="preload stylesheet"` so that it can be remove later (see example below).
 
 Scripts will be cached for browser reuse.
 If scripts change, reload browser by:
@@ -12,6 +12,12 @@ Windows: ctrl + F5
 Mac/Apple: Apple + R or command + R
 Linux: F5
 ```
+
+###How to use
+1. Clone this packages in packages folder
+2. Remove wait-on-lib-js if installed before
+3. Install this package by: `meteor add nirleka:wait-on-lib-js`
+4. See example below
 
 ###Load one or more independend libraries
 Use Iron-Router waitOn to load external javascript libraries
