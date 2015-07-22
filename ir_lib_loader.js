@@ -10,7 +10,7 @@ IRLibLoader.load = function(src, options) {
         this._libs[src] = {
             src: src,
             ready: false,
-            readyDeps: new Deps.Dependency,
+            readyDeps: new Deps.Dependency(),
             options: options
         };
 		var isCSS = cssRE.test(src);
@@ -24,9 +24,10 @@ IRLibLoader.load = function(src, options) {
                 if (jqxhr.status === 200) {
                     lib.ready = true;
                     lib.readyDeps.changed();
-					if (isCSS) {
-						$( 'head' ).append( '<link rel="preload stylesheet" type="text/css" href="' + src + '"/>' );
-					} else if (options && options.success) {
+                    if (options && options.success) {
+                        if (isCSS) {
+                            $( 'head' ).append( '<link rel="preload stylesheet" type="text/css" href="' + src + '"/>' );
+                        }
                         return options.success(data);
                     }
                 }
@@ -38,7 +39,7 @@ IRLibLoader.load = function(src, options) {
             }
         });
     }
-    handle = {
+    return {
         ready: function() {
             var lib;
             lib = self._libs[src];
@@ -46,7 +47,11 @@ IRLibLoader.load = function(src, options) {
             return lib.ready;
         }
     };
-    return handle;
+};
+
+var readyDeps;
+var handle = {
+    allReady: false
 };
 
 IRLibLoader.loadRecurse = function(srcArray, index, handle) {
@@ -68,18 +73,16 @@ IRLibLoader.loadRecurse = function(srcArray, index, handle) {
 };
 
 IRLibLoader.loadInOrder = function(srcArray) {
-    var allReady = false;
-    var readyDeps = new Deps.Dependency;
-    handle = {
-        ready: function() {
-            readyDeps.depend();
-            return allReady;
-        },
-        setReady: function() {
-            allReady = true;
-            readyDeps.changed();
-        }
+    readyDeps = new Deps.Dependency();
+    handle.ready = function() {
+        readyDeps.depend();
+        return this.allReady;
     };
+    handle.setReady =function() {
+        this.allReady = true;
+        readyDeps.changed();
+    };
+
     IRLibLoader.loadRecurse(srcArray, 0, handle);
     return handle;
 };
