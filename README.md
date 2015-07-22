@@ -72,10 +72,12 @@ Also notice that you can use an error and success callback in the IRLibLoader op
 
 ###Order preserving load with waitOn
 The method `IRLibLoader.loadInOrder` accepts an array of urls and loads them in that order one by one. This is light-weight and easy to use mechanism that works with any number of urls (since you do not need to explicitly dove-tail the callbacks). 
+The second parameter is boolean for output if script loaded or not (optional)
 ```javascript
 Router.map( function () {
   this.route('codeEditor',{
     waitOn: function(){
+		//with debug parameter
         return 	IRLibLoader.loadInOrder([
 							"//www.google.com/jsapi",
 							"//d26b395fwzu5fz.cloudfront.net/3.2.0/keen.js",
@@ -92,7 +94,7 @@ Router.map( function () {
 							"//cdnjs.cloudflare.com/ajax/libs/codemirror/4.10.0/addon/display/placeholder.min.js",
 							"//handsontable.com/dist/handsontable.full.css",
 							"//handsontable.com/dist/handsontable.full.js"
-							]);
+							], true);
        	}
   });
 });

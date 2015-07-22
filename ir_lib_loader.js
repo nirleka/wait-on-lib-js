@@ -54,25 +54,29 @@ var handle = {
     allReady: false
 };
 
-IRLibLoader.loadRecurse = function(srcArray, index, handle) {
+IRLibLoader.loadRecurse = function(srcArray, index, handle, debug) {
     if (index < 0 || index >= srcArray.length) {
         handle.setReady();
         return;
     }
     IRLibLoader.load(srcArray[index], {
         success: function() {
-            console.log("Loaded: " + srcArray[index]);
+            if (debug) {
+                console.log("Loaded: " + srcArray[index]);
+            }
             IRLibLoader.loadRecurse(srcArray, index + 1, handle);
         },
         error: function(e) {
             // this one failed - but we continue with the rest
-            console.log("Error loading: " + srcArray[index]);
+            if (debug) {
+                console.log("Error loading: " + srcArray[index]);
+            }
             IRLibLoader.loadRecurse(srcArray, index + 1, handle);
         }
     });
 };
 
-IRLibLoader.loadInOrder = function(srcArray) {
+IRLibLoader.loadInOrder = function(srcArray, debug) {
     readyDeps = new Deps.Dependency();
     handle.ready = function() {
         readyDeps.depend();
@@ -83,6 +87,6 @@ IRLibLoader.loadInOrder = function(srcArray) {
         readyDeps.changed();
     };
 
-    IRLibLoader.loadRecurse(srcArray, 0, handle);
+    IRLibLoader.loadRecurse(srcArray, 0, handle, debug);
     return handle;
 };
