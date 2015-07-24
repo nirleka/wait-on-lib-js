@@ -2,8 +2,8 @@ wait-on-lib-js-css
 ==================
 Fork from [MaximDubrovin](https://github.com/MaximDubrovin/wait-on-lib-js)
 
-Use Iron-Router waitOn or onBeforeAction hooks to load external javascript libraries / css file. 
-The css will be added in head in link tag with `rel="preload stylesheet"` so that it can be remove later (see example below).
+Use Iron-Router waitOn or onBeforeAction hooks to load external javascript libraries / css file.
+The css will be added in head in link tag with `data-preloadcss="1"` so that it can be remove later (see example below).
 
 Scripts will be cached for browser reuse.
 If scripts change, reload browser by:
@@ -60,10 +60,9 @@ Here we have one.js and two.js. two.js has to be loaded secondly because it depe
 Don't forget to remove the preload css when load route by adding action below in default controller.
 ```javascript
 var DashboardController = RouteController.extend({
-    beforeAction: function() {
+    action: function() {
 		//remove all preload css if exist
-		$("link[rel^='preload stylesheet']").remove();
-		this.next();
+		$('*[data-preloadcss="1"]').remove();
     }
 });
 ```
@@ -71,13 +70,11 @@ var DashboardController = RouteController.extend({
 Also notice that you can use an error and success callback in the IRLibLoader options.
 
 ###Order preserving load with waitOn
-The method `IRLibLoader.loadInOrder` accepts an array of urls and loads them in that order one by one. This is light-weight and easy to use mechanism that works with any number of urls (since you do not need to explicitly dove-tail the callbacks). 
-The second parameter is boolean for output if script loaded or not (optional)
+The method `IRLibLoader.loadInOrder` accepts an array of urls and loads them in that order one by one. This is light-weight and easy to use mechanism that works with any number of urls (since you do not need to explicitly dove-tail the callbacks).
 ```javascript
 Router.map( function () {
   this.route('codeEditor',{
     waitOn: function(){
-		//with debug parameter
         return 	IRLibLoader.loadInOrder([
 							"//www.google.com/jsapi",
 							"//d26b395fwzu5fz.cloudfront.net/3.2.0/keen.js",
@@ -94,7 +91,7 @@ Router.map( function () {
 							"//cdnjs.cloudflare.com/ajax/libs/codemirror/4.10.0/addon/display/placeholder.min.js",
 							"//handsontable.com/dist/handsontable.full.css",
 							"//handsontable.com/dist/handsontable.full.js"
-							], true);
+							]);
        	}
   });
 });

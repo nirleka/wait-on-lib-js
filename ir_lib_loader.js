@@ -26,7 +26,7 @@ IRLibLoader.load = function(src, options) {
                     lib.readyDeps.changed();
                     if (options && options.success) {
                         if (isCSS) {
-                            $( 'head' ).append( '<link rel="preload stylesheet" type="text/css" href="' + src + '"/>' );
+                            $( 'head' ).append( '<link rel="stylesheet" data-preloadcss="1" type="text/css" href="' + src + '"/>' );
                         }
                         return options.success(data);
                     }
